@@ -21,6 +21,14 @@ namespace GeometricForms
         {
             HexString = hexString;
         }
+        public HexColorValue(int redValue, int blueValue, int greenValue)
+        {
+            HexString = new Color(redValue, blueValue, greenValue).GetHexValue().ToString();
+        }
+        public HexColorValue(Color decimalColor) 
+        {
+            HexString = decimalColor.GetHexValue().ToString();
+        }
 
         public string HexString
         {
@@ -30,23 +38,28 @@ namespace GeometricForms
                 if (!ValidateHex(value)){
                     throw new Exception(WrongHex);
                 }
-                hexString = value;
+                hexString = value.ToUpper();
             }
         }
         public int GetRedRGBCode()
         {
-            string redHex = this.HexString.Substring(RedPosition-IndividualColorSize,RedPosition);
+            
+            string redHex = this.HexString.Substring(RedPosition-IndividualColorSize, IndividualColorSize);
             return Convert.ToInt32(redHex, HexadecimalValues);
         }
         public int GetGreenRGBCode()
         {
-            string blueHex = this.HexString.Substring(GreenPosition - IndividualColorSize, GreenPosition);
+            string blueHex = this.HexString.Substring(GreenPosition - IndividualColorSize, IndividualColorSize);
             return Convert.ToInt32(blueHex, HexadecimalValues);
         }
         public int GetBlueRGBCode()
         {
-            string greenHex = this.HexString.Substring(BluePosition - IndividualColorSize, BluePosition);
+            string greenHex = this.HexString.Substring(BluePosition - IndividualColorSize, IndividualColorSize);
             return Convert.ToInt32(greenHex, HexadecimalValues);
+        }
+        public Color GetRGBColor() 
+        {
+            return new Color(GetRedRGBCode(),GetGreenRGBCode(), GetBlueRGBCode());
         }
         public static bool ValidateHex(string hex)
         {
@@ -64,6 +77,10 @@ namespace GeometricForms
         {
             int utfCharCode = Convert.ToInt32(hexChar);
             return utfCharCode >= UTFZeroWord || utfCharCode <= UTFNineWord || utfCharCode >= UTFAword || utfCharCode <= UTFFword;
+        }
+        public override string ToString()
+        {
+            return HexString;
         }
     }
 }
