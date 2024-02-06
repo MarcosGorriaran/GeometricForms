@@ -7,20 +7,48 @@ namespace GeometricForms
         
        
         private const string WrongHexSize = "El string con el hex debe tener una longitud de 6";
-        private int RedValue;
-        private int GreenValue;
-        private int BlueValue;
+        private int redValue;
+        private int greenValue;
+        private int blueValue;
 
-        public Color(string hexValue)
+        public Color(int redValue, int greenValue, int blueValue)
         {
-
+            RedValue = redValue;
+            GreenValue = greenValue;
+            BlueValue = blueValue;
         }
-        public int SetRGBWithHex(string hexValue)
+        public Color(HexColorValue hexValue)
         {
-            
-            hexValue = hexValue.ToUpper();
-
-            
+            SetRGBWithHex(hexValue);
+        }
+        public Color (string hexValue)
+        {
+            SetRGBWithHex(new HexColorValue(hexValue));
+        }
+        public int RedValue
+        {
+            get => redValue;
+            set => redValue = value;
+        }
+        public int GreenValue
+        {
+            get => greenValue;
+            set => greenValue = value;
+        }
+        public int BlueValue
+        {
+            get => greenValue;
+            set => greenValue = value;
+        }
+        public void SetRGBWithHex(HexColorValue hexValue)
+        {
+            RedValue = hexValue.GetRedRGBCode();
+            GreenValue = hexValue.GetGreenRGBCode();
+            BlueValue = hexValue.GetGreenRGBCode();
+        }
+        public override string ToString()
+        {
+            return $"{RedValue}, {GreenValue}, {BlueValue}";
         }
     }
 }
